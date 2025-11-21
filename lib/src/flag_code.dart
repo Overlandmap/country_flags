@@ -260,6 +260,13 @@ class FlagCode {
     ['ZAF', 'ZA']: 'za',
     ['ZMB', 'ZM']: 'zm',
     ['ZWE', 'ZW']: 'zw',
+    // disputed
+    ['ABK', '_ABKHAZIA']: '_Abkhazia',
+    ['SOS', '_SOUTH_OSSETIA']: '_South_Ossetia',
+    ['SOL', '_SOMALILAND']: '_Somaliland',
+    ['CYN', '_NORTHERN_CYPRUS']: '_Northern_Cyprus',
+    ['PMR', '_TRANSNISTRIA']: '_Transnistria',
+    ['GAZ', '_GAZA']: '_Gaza',
   };
 
   static const Map<String, String> _flagCodesCurrencies = {
@@ -719,36 +726,28 @@ class FlagCode {
   /// Source of the language codes:
   /// http://www.lingoes.net/en/translator/langcode.htm
   static String? fromLanguageCode(String languageCode) =>
-      _flagCodesLanguages.entries
-          .singleWhereOrNull((entry) => entry.key == languageCode)
-          ?.value;
+      _flagCodesLanguages.entries.singleWhereOrNull((entry) => entry.key == languageCode)?.value;
 
   /// Get the flag code from a country code.
   ///
   /// Returns `null` if the country code is not found.
   static String? fromCountryCode(String countryCode) =>
-      _flagCodesCountries.entries
-          .singleWhereOrNull((entry) => entry.key.contains(countryCode))
-          ?.value;
+      _flagCodesCountries.entries.singleWhereOrNull((entry) => entry.key.contains(countryCode))?.value;
 
   /// Get the flag code from a currency code.
   ///
   /// Returns `null` if the currency code is not found.
-  static String? fromCurrencyCode(String currencyCode) =>
-      _flagCodesCurrencies.entries
-          .singleWhereOrNull(
-            (entry) => entry.key == currencyCode,
-          )
-          ?.value;
+  static String? fromCurrencyCode(String currencyCode) => _flagCodesCurrencies.entries
+      .singleWhereOrNull(
+        (entry) => entry.key == currencyCode,
+      )
+      ?.value;
 
   /// Get the primary flag code from a phone prefix code (e.g., +55 or 55).
   ///
   /// Returns `null` if the phone prefix code is not found.
   static String? fromPhonePrefix(String prefix) {
     final normalized = prefix.startsWith('+') ? prefix : '+$prefix';
-    return _flagCodesDdi.entries
-        .singleWhereOrNull((entry) => entry.key == normalized)
-        ?.value
-        .first;
+    return _flagCodesDdi.entries.singleWhereOrNull((entry) => entry.key == normalized)?.value.first;
   }
 }
